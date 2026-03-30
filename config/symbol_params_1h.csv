@@ -1,0 +1,13 @@
+symbol,leverage,risk_pct,sl_atr_multi,tp_atr_multi
+BTC,10,0.1,2,3.2
+ETH,10,0.1,2,3.2
+SOL,20,0.1,2.5,4
+SUI,10,0.1,3,4.8
+DOGE,10,0.1,3,4.8
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,
+,,,,

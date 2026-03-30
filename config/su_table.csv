@@ -1,0 +1,6 @@
+name,symbol,res,strat
+001_market_price_usd_ohlc,BTC,1h,cta_momentum
+002_market_price_usd_ohlc,ETH,1h,cta_momentum
+003_market_price_usd_ohlc,SUI,1h,cta_momentum
+004_market_price_usd_ohlc,SOL,1h,cta_momentum
+005_market_price_usd_ohlc,DOGE,1h,cta_momentum
