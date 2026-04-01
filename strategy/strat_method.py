@@ -46,9 +46,16 @@ class CreateSignal:
         if not self.wfa_df.empty and symbol in self.wfa_df.index:
             best_atr_mult = float(self.wfa_df.loc[symbol, 'best_atr_mult'])
 
-        # --- 構建進出場邏輯 ---
-        cond_vix = df['VIX_Proxy'] > 20.0
+        # ====================================================
+        # 🌟 核心升級：VIX 恐慌指數過濾器 (雙向安全閥)
+        # ====================================================
+        VIX_MIN = 20.0  # 底線：市場太死寂(沒波動)時不進場
+        VIX_MAX = 70.0  # 天花板：市場太瘋狂(如黑天鵝/瘋狂插針)時強制罷工不進場
+
+        # 必須同時符合大於底線且小於天花板，才算是「安全的波動環境」
+        cond_vix = (df['VIX_Proxy'] > VIX_MIN) & (df['VIX_Proxy'] < VIX_MAX)
         cond_mom = df['K_Body_Abs'] > (best_atr_mult * df['ATR_14'])
+        # ====================================================
 
         # 進場：突破順勢通道
         long_entry = cond_vix & cond_mom & (df['close'] > df['SMA_200']) & (df['close'] > df['Donchian_High'].shift(1))
@@ -58,7 +65,7 @@ class CreateSignal:
         long_exit = df['close'] < df['Donchian_Low'].shift(1)
         short_exit = df['close'] > df['Donchian_High'].shift(1)
 
-        # 【核心修正】：實盤中的倉位狀態機
+        # 實盤中的倉位狀態機
         le = long_entry.to_numpy()
         se = short_entry.to_numpy()
         lx = long_exit.to_numpy()
